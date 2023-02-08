@@ -40,4 +40,24 @@ def _extract_tags(html):
     ['<strong>', '</strong>']
     '''
 
+    '''
     return re.findall(r'<[^>]*>', html)
+    '''
+
+    tags = re.findall(r'<[^>]*>', html)
+    individual_tag = ''
+    filtered_tags = []
+    for tag in tags:
+        if ' ' in tag and '/' not in tag or 'href' in tag:
+            for char in tag:
+                if char != ' ':
+                    individual_tag += str(char)
+                else:
+                    individual_tag += '>'
+                    filtered_tags.append(individual_tag)
+                    individual_tag = ''
+                    break
+        else:
+            filtered_tags.append(tag)
+    print("filtered_tags=", filtered_tags)
+    return filtered_tags
